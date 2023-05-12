@@ -6,13 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
-        "codeigniter4/framework": "^4.0"
+        "codeigniter4/framework": "^4.0",
+        "evilfreelancer/routeros-api-php": "*"
     },
-    "require-dev": {
-        "fakerphp/faker": "^1.9",
-        "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^9.1"
-    },
+
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
@@ -22,11 +19,6 @@
         "exclude-from-classmap": [
             "**/Database/Migrations/**"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\Support\\": "tests/_support"
-        }
     },
     "scripts": {
         "test": "phpunit"
