@@ -51,7 +51,6 @@
                                                         <i style="font-size:2rem" class="mdi mdi-dns"></i>
                                                     </a>
                                                 </form>
-
                                                 <div class="media-body valign-middle">
                                                     <form style="display:inline !important;" class="me-3" id="" action="do_auth_router" method="post">
                                                         <input type="hidden" value="<?= $row->id ?>" name="router_id" />

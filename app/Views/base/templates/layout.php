@@ -70,7 +70,7 @@
                 <ul class="nav">
                     <li class="nav-item nav-category">Main</li>
                     <li class="nav-item">
-                        <a href="<?= base_url(); ?>router/list" class="nav-link">
+                        <a href="<?= base_url(); ?>dashboard" class="nav-link">
                             <i class="link-icon" data-feather="box"></i>
                             <span class="link-title">Dashboard</span>
                         </a>
@@ -91,7 +91,6 @@
                 <div class="navbar-content">
 
                     <ul class="navbar-nav">
-
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
