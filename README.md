@@ -19,7 +19,7 @@ MikApps is a application management with api
 
 ## Setup
 
-Create database 'mikposdb' without quote, then
+Create database 'mikapps' without quote, then
 Copy `.env.examples` to `.env` and set the database settings.
 Uncomment '#' and set database line settings below :
 
@@ -40,6 +40,7 @@ database.default.DBDriver = MySQLi
 ## Default Login
 
 Username : `admin`
+
 Password : `admin`
 
 ## Important
