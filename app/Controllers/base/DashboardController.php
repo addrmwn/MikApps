@@ -3,7 +3,7 @@
 
 namespace App\Controllers\base;
 
-use App\Controllers\BaseController; // Which BaseController are you referring to.
+use App\Controllers\BaseController;
 use App\Models\base\DashboardModel;
 use App\Libraries\RouterosAPI;
 
@@ -170,7 +170,7 @@ class DashboardController extends BaseController
             );
             $this->session->set($sess_data);
 
-            return redirect()->to(base_url('/u/dashboard'));
+            return redirect()->to(base_url('dashboard'));
         } else {
             $this->session->setFlashdata('error', ['Username/Password Salah']);
             return redirect()->to(base_url('list'));
@@ -206,6 +206,112 @@ class DashboardController extends BaseController
             }
         }
     }
+
+
+    public function dashboard()
+    {
+
+        $dashboardmodel = new DashboardModel;
+
+        $router = $dashboardmodel->get_router();
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+            $interface = $row->traffic_interface;
+        }
+
+        if ($this->ros->connect($host, $uname, $pass)) {
+            // get hotspot info
+
+            $hotspotuser = $this->ros->comm("/ip/hotspot/user/print");
+            $hotspotactive = $this->ros->comm("/ip/hotspot/active/print");
+            $hotspotprofile = $this->ros->comm("/ip/hotspot/user/profile/print");
+
+            //get mikrotik system clock
+            $getclock = $this->ros->comm("/system/clock/print");
+            $clock = $getclock[0];
+            $timezone = $getclock[0]['time-zone-name'];
+
+            // get MikroTik system clock
+            $getresource = $this->ros->comm("/system/resource/print");
+
+            $resource = $getresource[0];
+
+            // get routeboard info
+            $getrouterboard = $this->ros->comm("/system/routerboard/print");
+
+            $routerboard = $getrouterboard[0];
+
+            //get interface
+            $getinterface = $this->ros->comm("/interface/print");
+
+            //get intraface db
+            $monitor = $interface;
+
+            $data = [
+                'title' => 'Dashboard',
+                'hotspotuser' => count($hotspotuser),
+                'hotspotactive' => count($hotspotactive),
+                'hotspotprofile' => count($hotspotprofile),
+                'sysdate' => $clock['date'],
+                'systime' => $clock['time'],
+                'uptime' => $resource['uptime'],
+                'timezone' => $timezone,
+                'model' => $routerboard['model'],
+                'architecture' => $resource['architecture-name'],
+                'version' => $resource['version'],
+                'interface' => $getinterface,
+                'traffics' => $monitor,
+                'view' => 'base/dashboard/home',
+
+            ];
+
+            return view('base/templates/layout', $data);
+        } else {
+            $this->session->setFlashdata('error', ['Router tidak merespon']);
+            return redirect()->to(base_url('router/list'));
+        }
+    }
+
+    public function traffic()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $router = $dashboardmodel->get_router();
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+            $interfaces = $row->traffic_interface;
+        }
+
+        if ($this->ros->connect($host, $uname, $pass)) {
+            $getinterface = $this->ros->comm("/interface/monitor-traffic", array(
+                'interface' => $interfaces,
+                'once' => '',
+            ));
+            $rows = array();
+            $rows2 = array();
+
+
+            $ftx = $getinterface[0]['rx-bits-per-second'];
+            $frx = $getinterface[0]['tx-bits-per-second'];
+
+            $rows['name'] = 'Tx';
+            $rows['data'][] = $ftx;
+            $rows2['name'] = 'Rx';
+            $rows2['data'][] = $frx;
+            $result = array();
+
+            array_push($result, $rows);
+            array_push($result, $rows2);
+            print json_encode($result);
+        }
+    }
+
 
     public function logout()
     {
