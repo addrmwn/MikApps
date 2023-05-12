@@ -40,6 +40,7 @@ database.default.DBDriver = MySQLi
 ## Default Login
 
 Username : `admin`
+
 Password : `admin`
 
 ## Important
