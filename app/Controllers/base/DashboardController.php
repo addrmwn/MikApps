@@ -12,7 +12,6 @@ class DashboardController extends BaseController
 
     public function __construct()
     {
-
         $this->session = session();
         $this->request = \Config\Services::request();
         $this->uri = $this->request->uri;
@@ -198,8 +197,9 @@ class DashboardController extends BaseController
             $save = $dashboardmodel->updateuser($data);
 
             if ($save) {
+                $this->session->remove('status');
                 $this->session->setFlashdata('success', ['User berhasil diubah!']);
-                return redirect()->to(base_url('router/list'));
+                return redirect()->to(base_url('/'));
             } else {
                 $this->session->setFlashdata('error', ['Gagal!']);
                 return redirect()->to(base_url('router/list'));
@@ -309,6 +309,270 @@ class DashboardController extends BaseController
             array_push($result, $rows);
             array_push($result, $rows2);
             print json_encode($result);
+        }
+    }
+
+    public function profile()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $getprofile = $dashboardmodel->getservice();
+
+        $countprofile = count($getprofile);
+
+        $data = [
+            'title' => 'Hotspot Profile',
+            'totalprofile' => $countprofile,
+            'getprofile' => $getprofile,
+            'view' => 'base/router/hotspot/profile'
+        ];
+
+        return view('base/templates/layout', $data);
+    }
+
+    public function add_profile()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $name = $this->request->getPost('name');
+        $ratelimit = $this->request->getPost('ratelimit');
+        $uptime = $this->request->getPost('uptime');
+        $price = $this->request->getPost('price');
+        $mac = $this->request->getPost('mac');
+        $shared = $this->request->getPost('shared');
+
+        $router = $dashboardmodel->get_router();
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+        }
+
+        if ($mac == 'Ya') {
+            $lock = '; [:local mac $"mac-address"; /ip hotspot user set mac-address=$mac [find where name=$user]]';
+        } else {
+            $lock = '';
+        }
+
+        $scheduler = '{:local usernya $user;:if ([/system schedule find name=$usernya]="") do={/system schedule add name=$usernya interval=' . $uptime . ' on-event="/ip hotspot user remove [find name=$usernya]\r\n/ip hotspot active remove [find user=$usernya]\r\n/system schedule remove [find name=$usernya]"}}' . $lock;
+
+        if ($this->ros->connect($host, $uname, $pass)) {
+            $this->ros->comm("/ip/hotspot/user/profile/add", array(
+                "name" => $name,
+                "rate-limit" => $ratelimit,
+                "shared-users" => $shared,
+                "on-login" =>  $scheduler,
+                "status-autorefresh" => "1m",
+            ));
+
+            $data = array(
+                'service' => $name,
+                'shared' => $shared,
+                'ratelimit' => $ratelimit,
+                'uptime' => $uptime,
+                'price' => $price,
+            );
+
+            $save = $dashboardmodel->insertservice($data);
+
+            if ($save) {
+                $this->session->setFlashdata('success', ['Profile berhasil ditambahkan']);
+                return redirect()->to(base_url('hotspot/profile'));
+            } else {
+                $this->session->setFlashdata('error', ['Profile gagal ditambahkan']);
+                return redirect()->to(base_url('hotspot/profile'));
+            }
+        } else {
+            $this->session->setFlashdata('error', ['Router tidak merespon']);
+            return redirect()->to(base_url('router/list'));
+        }
+    }
+
+    public function delete_profile($service)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $router = $dashboardmodel->get_router();
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+        }
+
+        if ($this->ros->connect($host, $uname, $pass)) {
+            $getprofile = $this->ros->comm("/ip/hotspot/user/profile/print", array(
+                "?name" => $service,
+            ));
+            if ($getprofile == null) {
+                $dashboardmodel->delete_profile($service);
+                $this->session->setFlashdata('error', ['Profile tidak ditemukan pada mikrotik dan berhasil di hapus pada database']);
+                return redirect()->to(base_url('hotspot/profile'));
+            } else {
+                foreach ($getprofile as $data) {
+                    $id = $data['.id'];
+                }
+                $this->ros->comm("/ip/hotspot/user/profile/remove", array(
+                    ".id" =>  $id,
+                ));
+
+                $dashboardmodel->delete_profile($service);
+                $this->session->setFlashdata('success', ['Profile berhasil dihapus']);
+                return redirect()->to(base_url('hotspot/profile'));
+            }
+        } else {
+            $this->session->setFlashdata('error', ['Router tidak merespon']);
+            return redirect()->to(base_url('router/list'));
+        }
+    }
+
+    public function edit_profile($service)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $router = $dashboardmodel->get_router();
+
+
+        $name = $this->request->getPost('name');
+        $ratelimit = $this->request->getPost('ratelimit');
+        $uptime = $this->request->getPost('uptime');
+        $price = $this->request->getPost('price');
+        $mac = $this->request->getPost('mac');
+        $shared = $this->request->getPost('shared');
+
+        if ($mac == 'Ya') {
+            $lock = '; [:local mac $"mac-address"; /ip hotspot user set mac-address=$mac [find where name=$user]]';
+        } else {
+            $lock = '';
+        }
+
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+        }
+        if ($this->ros->connect($host, $uname, $pass)) {
+            $getprofile = $this->ros->comm("/ip/hotspot/user/profile/print", array(
+                "?name" => $service,
+            ));
+            if ($getprofile == null) {
+                $dashboardmodel->delete_profile($service);
+                $this->session->setFlashdata('error', ['Profile tidak ditemukan pada mikrotik dan berhasil di hapus pada database']);
+                return redirect()->to(base_url('hotspot/profile'));
+            } else {
+                foreach ($getprofile as $data) {
+                    $id = $data['.id'];
+                }
+
+                $scheduler = '{:local usernya $user;:if ([/system schedule find name=$usernya]="") do={/system schedule add name=$usernya interval=' . $uptime . ' on-event="/ip hotspot user remove [find name=$usernya]\r\n/ip hotspot active remove [find user=$usernya]\r\n/system schedule remove [find name=$usernya]"}}' . $lock;
+
+                $updt = array(
+                    '.id' => $id,
+                    'name' => $name,
+                    'shared-users' => $shared,
+                    'rate-limit' => $ratelimit,
+                    "on-login" =>  $scheduler,
+                    "status-autorefresh" => "1m",
+                );
+
+                $this->ros->comm("/ip/hotspot/user/profile/set", $updt);
+
+
+                $update = array(
+                    'service' => $name,
+                    'shared' => $shared,
+                    'ratelimit' => $ratelimit,
+                    'uptime' => $uptime,
+                    'price' => $price,
+                );
+
+                $dashboardmodel->update_profile($service, $update);
+
+                $this->session->setFlashdata('success', ['Profile berhasil diganti']);
+                return redirect()->to(base_url('hotspot/profile'));
+            }
+        } else {
+            $this->session->setFlashdata('error', ['Router tidak merespon']);
+            return redirect()->to(base_url('router/list'));
+        }
+    }
+
+    public function active()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $router = $dashboardmodel->get_router();
+    }
+
+
+    public function editm($service)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $router = $dashboardmodel->get_router();
+
+        $name = 'mikapps-new';
+        $ratelimit = '1m/1m';
+
+        $uptime = '4h';
+        $mac = 'Ya';
+        $shared = '2';
+
+        if ($mac == 'Ya') {
+            $lock = '; [:local mac $"mac-address"; /ip hotspot user set mac-address=$mac [find where name=$user]]';
+        } else {
+            $lock = '';
+        }
+
+
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+        }
+
+        if ($this->ros->connect($host, $uname, $pass)) {
+            $getprofile = $this->ros->comm("/ip/hotspot/user/profile/print", array(
+                "?name" => $service,
+            ));
+            if ($getprofile == null) {
+                echo "Profile tidak ditemukan pada mikrotik dan berhasil di hapus pada database";
+            } else {
+                foreach ($getprofile as $data) {
+                    $id = $data['.id'];
+                }
+
+                $scheduler = '{:local usernya $user;:if ([/system schedule find name=$usernya]="") do={/system schedule add name=$usernya interval=' . $uptime . ' on-event="/ip hotspot user remove [find name=$usernya]\r\n/ip hotspot active remove [find user=$usernya]\r\n/system schedule remove [find name=$usernya]"}}' . $lock;
+
+
+                $updt = array(
+                    '.id' => $id,
+                    'name' => $name,
+                    'rate-limit' => $ratelimit,
+                    'shared-users' => $shared,
+                    "on-login" =>  $scheduler,
+                );
+
+                $this->ros->comm("/ip/hotspot/user/profile/set", $updt);
+                echo "berhasil";
+            }
+        }
+    }
+
+
+
+    public function generate()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $profile = $dashboardmodel->getservice();
+
+        if ($profile == null) {
+            return redirect()->to(base_url('hotspot/profile'));
+        } else {
         }
     }
 
