@@ -12,6 +12,7 @@ class DashboardModel extends Model
         parent::__construct();
         $db  = \Config\Database::connect();
         $this->users = $db->table('users');
+        $this->service =  $db->table('services');
         $this->router = $db->table('router');
         $this->session = session();
     }
@@ -28,6 +29,19 @@ class DashboardModel extends Model
         $builder = $this->router;
         $query = $builder->get();
         return $query->getResult();
+    }
+
+    public function getservice()
+    {
+        $builder = $this->service;
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function insertservice($save)
+    {
+        $builder = $this->service;
+        return $builder->insert($save);
     }
 
     public function auth_router($data)
@@ -65,5 +79,19 @@ class DashboardModel extends Model
         $builder = $this->router;
         $builder->where('id', $router_id);
         return $builder->delete();
+    }
+
+    public function delete_profile($name)
+    {
+        $builder = $this->service;
+        $builder->where('service', $name);
+        return $builder->delete();
+    }
+
+    public function update_profile($name, $data)
+    {
+        $builder = $this->service;
+        $builder->where('service', $name);
+        return $builder->update($data);
     }
 }
