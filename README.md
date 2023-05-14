@@ -9,8 +9,8 @@ Aplikasi ini tidak mengambil data
 - user profile hotspot
 - user hotspot
 
-jadi jika ingin menggunakan
-mohon hapus user profile yang ada pada mikrotik
+jadi jika ingin menggunakan <br>
+mohon hapus user profile yang ada pada mikrotik <br>
 lalu buatlah kembali lewat mikapps
 
 ### Tech Stack
