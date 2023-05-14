@@ -6,8 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
-        "codeigniter4/framework": "^4.0",
-        "evilfreelancer/routeros-api-php": "*"
+        "codeigniter4/framework": "^4.0"
     },
 
     "config": {
