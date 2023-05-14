@@ -54,6 +54,8 @@ $routes->add('traffic', 'DashboardController::traffic');
 
 // Hotspot
 $routes->add('hotspot/generate', 'DashboardController::generate');
+$routes->post('hotspot/prosesgenerate', 'DashboardController::prosesgenerate');
+
 $routes->add('hotspot/profile', 'DashboardController::profile');
 $routes->post('hotspot/add_profile', 'DashboardController::add_profile');
 $routes->post('hotspot/prosessinkron', 'DashboardController::prosessinkron');
