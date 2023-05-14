@@ -102,15 +102,88 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                            Add Profile
-                        </button>
-                    </div>
-                </div>
-                <h6 class="card-title">Hotspot Profile</h6>
 
+                <div id="sinkron" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="float-left">
+                                    <h6 class="modal-title" id="custom-width-modalLabel"><i class="mdi mdi-sync"></i> Sinkronisasi Profile</h6>
+                                </div>
+                                <div class="float-right">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" action="<?php echo base_url('hotspot/prosessinkron'); ?>" role="form" method="POST">
+
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">Name</label>
+                                        <div class="col-md-12">
+                                            <select class="form-select" aria-label="Default select example" name="name" id="name">
+                                                <option disabled value="" selected>Pilih salah satu</option>
+                                                <?php foreach ($getprofilm as $data) { ?>
+                                                    <option><?= $data['name'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label"> Masa Aktif [ Validity ]</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" type="text" autocomplete="off" name="uptime" id="uptime" placeholder="Example : 1h/4h/7h/30d">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label"> Harga</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" type="number" autocomplete="off" name="price" id="price" placeholder="Example : 1000">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">Kunci Mac Address</label>
+                                        <div class="col-md-12">
+                                            <select class="form-select" aria-label="Default select example" name="mac" id="mac">
+                                                <option disabled value="" selected>Pilih salah satu</option>
+                                                <option value="Ya">Ya</option>
+                                                <option value="Tidak">Tidak</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label"> Shared Users</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" type="text" autocomplete="off" name="shared" id="shared" placeholder="Example : 1">
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Kembali</button>
+                                        <button type="reset" class="btn btn-danger waves-effect" data-dismiss="modal"><i class="mdi mdi-refresh"></i> Reset</button>
+                                        <button type="submit" class="btn btn-success btn-bordered waves-effect w-md waves-light"><i class="mdi mdi-sync"></i> Proses Sinkron</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <h6 class="card-title">Hotspot Profile</h6>
+                <div class="col-lg-6">
+                    <div class="example">
+
+
+                        <button type="button" class="btn btn-primary mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#myModal"><i class="mdi mdi-account-multiple-plus"></i> Add Profile</button>
+                        <button type="button" class="btn btn-secondary mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#sinkron"><i class="mdi mdi-sync"></i> Sinkronisasi Profile</button>
+                    </div>
+
+
+                </div>
                 <div class="table-responsive">
                     <table id="dataTableExample" class="table">
                         <thead>
