@@ -49,21 +49,24 @@ $routes->get('logout', 'DashboardController::logout');
 
 // Dashboard
 $routes->add('dashboard', 'DashboardController::dashboard');
-$routes->add('u/userlist', 'DashboardController::userlist');
-$routes->add('u/extendexpire', 'DashboardController::extendexpire');
-$routes->add('u/adduser', 'DashboardController::adduser');
-$routes->add('u/generateusers', 'DashboardController::generateusers');
-$routes->add('u/edituser', 'DashboardController::edituser');
-$routes->add('u/userprofiles', 'DashboardController::userprofiles');
-$routes->add('u/adduserprofile', 'DashboardController::adduserprofile');
-$routes->add('u/printvoucher', 'DashboardController::printvoucher');
-$routes->add('u/paymentsettings', 'DashboardController::paymentsettings');
-$routes->add('u/paymentreport', 'DashboardController::paymentreport');
-$routes->add('u/paymentpage', 'DashboardController::paymentpage');
 $routes->add('traffic', 'DashboardController::traffic');
 
-$routes->add('u/pppprofiles', 'PPPController::ppp_profile');
-$routes->add('u/pppsecrets', 'PPPController::ppp_secret');
+
+// Hotspot
+$routes->add('hotspot/generate', 'DashboardController::generate');
+$routes->add('hotspot/profile', 'DashboardController::profile');
+$routes->post('hotspot/add_profile', 'DashboardController::add_profile');
+$routes->add('hotspot/delete_profile/(:any)', 'DashboardController::delete_profile/$1');
+$routes->add('hotspot/edit_profile/(:any)', 'DashboardController::edit_profile/$1');
+$routes->add('hotspot/active', 'DashboardController::active');
+
+$routes->add('hotspot/editm/(:any)', 'DashboardController::editm/$1');
+
+
+
+
+
+
 
 
 
