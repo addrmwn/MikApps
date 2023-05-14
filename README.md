@@ -2,10 +2,15 @@
 
 MikApps is a application management with api
 
+### Information
+
+Aplikasi ini tidak mengambil data user profile hotspot anda, jadi jika ingin menggunakan
+mohon hapus user profile yang ada pada mikrotik
+lalu buatlah kembali lewat mikapps
+
 ### Tech Stack
 
 - [CodeIgniter 4](https://www.codeigniter.com/) - The small framework with powerful features
-- [evilfreelancer/routeros-api-php](https://github.com/EvilFreelancer/routeros-api-php) - RouterOS API Client.
 
 ## Minimum Requirements
 
