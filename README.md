@@ -4,7 +4,7 @@ MikApps is a application management with api
 
 ### Information
 
-Aplikasi ini tidak mengambil
+Aplikasi ini tidak mengambil data
 
 - user profile hotspot
 - user hotspot
