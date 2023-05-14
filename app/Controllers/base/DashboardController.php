@@ -382,9 +382,6 @@ class DashboardController extends BaseController
                 $id = $data['.id'];
                 $ratelimit = $data['rate-limit'];
             }
-
-            dd($getprofile);
-
             $scheduler = '{:local usernya $user;:if ([/system schedule find name=$usernya]="") do={/system schedule add name=$usernya interval=' . $uptime . ' on-event="/ip hotspot user remove [find name=$usernya]\r\n/ip hotspot active remove [find user=$usernya]\r\n/system schedule remove [find name=$usernya]"}}' . $lock;
 
             $updt = array(
