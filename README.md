@@ -4,7 +4,12 @@ MikApps is a application management with api
 
 ### Information
 
-Aplikasi ini tidak mengambil data user profile hotspot anda, jadi jika ingin menggunakan
+Aplikasi ini tidak mengambil
+
+- data user profile hotspot
+- user hotspot
+
+jadi jika ingin menggunakan
 mohon hapus user profile yang ada pada mikrotik
 lalu buatlah kembali lewat mikapps
 
