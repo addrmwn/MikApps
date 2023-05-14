@@ -6,6 +6,7 @@ namespace App\Controllers\base;
 use App\Controllers\BaseController;
 use App\Models\base\DashboardModel;
 use App\Libraries\RouterosAPI;
+use CodeIgniter\I18n\Time;
 
 class DashboardController extends BaseController
 {
@@ -630,7 +631,116 @@ class DashboardController extends BaseController
 
             return redirect()->to(base_url('hotspot/profile'));
         } else {
+            $router = $dashboardmodel->get_router();
+
+            foreach ($router as $row) {
+                $host = $row->ip;
+                $uname = $row->username;
+                $pass = decrypt($row->password);
+            }
+
+            if ($this->ros->connect($host, $uname, $pass)) {
+
+                $serverhotspot = $this->ros->comm("/ip/hotspot/print");
+
+                $data = [
+                    'title' => 'Generate Voucher',
+                    'server' => $serverhotspot,
+                    'profile' => $profile,
+                    'view' => 'base/router/hotspot/generate'
+                ];
+
+                return view('base/templates/layout', $data);
+            }
         }
+    }
+
+    public function prosesgenerate()
+    {
+        ini_set('max_execution_time', 300);
+
+        $date = Time::now('Asia/Jakarta');
+
+        $dashboardmodel = new DashboardModel;
+
+        $quantity = $this->request->getPost('quantity');
+        $server = $this->request->getPost('server');
+        $lenght = $this->request->getPost('lenght');
+        $character = $this->request->getPost('character');
+        $profile = $this->request->getPost('profile');
+        $timelimit = $this->request->getPost('timelimit');
+        $comment = $this->request->getPost('comment');
+
+        $router = $dashboardmodel->get_router();
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+        }
+
+        $checkprofile = $dashboardmodel->whereservice($profile);
+
+        foreach ($checkprofile as $dataprofile) {
+            $name = $dataprofile->service;
+            $price = $dataprofile->price;
+        }
+
+        for ($n = 1; $n <= $quantity; $n++) {
+
+            if ($character == 'lower1') {
+                $voc[$n] = randLC($lenght);
+            } else if ($character == 'upper1') {
+                $voc[$n] = randUC($lenght);
+            } else if ($character == 'upplow1') {
+                $voc[$n] = randULC($lenght);
+            } else if ($character == 'mix') {
+                $voc[$n] = randNLC($lenght);
+            } else if ($character == 'mix1') {
+                $voc[$n] = randNUC($lenght);
+            } else if ($character == 'mix2') {
+                $voc[$n] = randNULC($lenght);
+            }
+
+            if ($timelimit == "") {
+                $time = "0";
+            } else {
+                $time = $timelimit;
+            }
+
+            $oid = random_number(3) . random_number(4);
+
+            $cmnt = "vc-" . rand(100, 999) . "-" . date("m.d.y") . "-" . $comment;
+            if ($this->ros->connect($host, $uname, $pass)) {
+
+
+                $this->ros->comm("/ip/hotspot/user/add", array(
+                    'server' => $server,
+                    'name' => $voc[$n],
+                    'password' => $voc[$n],
+                    'profile' => $profile,
+                    'limit-uptime' => $time,
+                    'comment' => $cmnt
+                ));
+
+                $data = array(
+                    'oid' => $oid,
+                    'service' => $name,
+                    'code' => $voc[$n],
+                    'price' => $price,
+                    'status' => '0',
+                    'datetime' => $date,
+                    'comment' => $cmnt
+                );
+
+                $save = $dashboardmodel->insertvoucher($data);
+            } else {
+                $this->session->setFlashdata('error', ['Router tidak merespon']);
+                return redirect()->to(base_url('router/list'));
+            }
+        }
+        $this->session->setFlashdata('success', ['Berhasil generate voucher']);
+        return redirect()->to(base_url('hotspot/generate'));
     }
 
 

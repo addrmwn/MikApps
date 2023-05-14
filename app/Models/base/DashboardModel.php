@@ -12,6 +12,7 @@ class DashboardModel extends Model
         parent::__construct();
         $db  = \Config\Database::connect();
         $this->users = $db->table('users');
+        $this->voucher = $db->table('voucher');
         $this->service =  $db->table('services');
         $this->router = $db->table('router');
         $this->session = session();
@@ -38,9 +39,23 @@ class DashboardModel extends Model
         return $query->getResult();
     }
 
+    public function whereservice($id)
+    {
+        $builder = $this->service;
+        $builder->where('service', $id);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
     public function insertservice($save)
     {
         $builder = $this->service;
+        return $builder->insert($save);
+    }
+
+    public function insertvoucher($save)
+    {
+        $builder = $this->voucher;
         return $builder->insert($save);
     }
 
