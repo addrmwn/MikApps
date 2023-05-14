@@ -504,6 +504,31 @@ class DashboardController extends BaseController
         $dashboardmodel = new DashboardModel;
 
         $router = $dashboardmodel->get_router();
+
+        foreach ($router as $row) {
+            $host = $row->ip;
+            $uname = $row->username;
+            $pass = decrypt($row->password);
+        }
+
+        if ($this->ros->connect($host, $uname, $pass)) {
+
+            // get hotspot info
+            $hotspotactive = $this->ros->comm("/ip/hotspot/active/print");
+
+            $data = [
+                'title' => 'Hotspot Active',
+                'totalhotspotactive' => count($hotspotactive),
+                'hotspotactive' => $hotspotactive,
+
+                'view' => 'base/router/hotspot/active'
+            ];
+
+            return view('base/templates/layout', $data);
+        } else {
+            $this->session->setFlashdata('error', ['Router tidak merespon']);
+            return redirect()->to(base_url('router/list'));
+        }
     }
 
 
