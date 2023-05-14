@@ -1,6 +1,6 @@
 # MikApps
 
-MikApps is a application management with API
+MikApps is a application management with API and cronjob
 
 ![Screenshot 2023-05-14 202658](https://github.com/addrmwn/MikApps/assets/50067501/ed2ad898-f745-4c67-a759-f09ac150add6)
 
@@ -8,17 +8,16 @@ MikApps is a application management with API
 
 Aplikasi ini tidak mengambil data
 
-- profile hotspot
-- user hotspot
+- user hotspot / voucher
 
-jadi jika ingin menggunakan <br>
-mohon hapus user profile <br>
-dan juga user hotspot yang ada pada mikrotik <br>
+jadi jika ingin menggunakan dan berjalan dengan normal <br>
+mohon hapus user hotspot / voucher <br>
 lalu buatlah kembali lewat mikapps
 
 ### Feature
 
 - Hotspot Manager( Progress )
+
 - Report Finance ( Soon )
 
 ### Tech Stack
