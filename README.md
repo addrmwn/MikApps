@@ -6,7 +6,7 @@ MikApps is a application management with api
 
 Aplikasi ini tidak mengambil
 
-- data user profile hotspot
+- user profile hotspot
 - user hotspot
 
 jadi jika ingin menggunakan
