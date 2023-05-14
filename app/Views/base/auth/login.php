@@ -67,6 +67,22 @@
 
                                         <?php endif ?>
 
+                                        <?php
+                                        $session = session();
+                                        $success = $session->getFlashdata('success');
+                                        if ($success != null) : ?>
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <i class="mdi mdi-check-circle me-2" aria-hidden="true"></i>
+
+                                                <?php foreach ($success as $suc) {
+                                                    echo $suc;
+                                                } ?>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
+                                            </div>
+
+
+                                        <?php endif ?>
+
                                         <a href="<?= base_url() ?>" class="noble-ui-logo logo-light d-block mb-2">Mik<span>Apps</span></a>
                                         <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
                                         <form method="post" action="<?php echo base_url('auth'); ?>" class="forms-sample">

@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendors/sweetalert2/sweetalert2.min.css">
     <!-- End plugin css for this page -->
 
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+    <!-- End plugin css for this page -->
+
+
 
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendors/flatpickr/flatpickr.min.css">
@@ -75,6 +80,54 @@
                             <span class="link-title">Dashboard</span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#hotspot" role="button" aria-expanded="false" aria-controls="hotspot">
+                            <i class="link-icon" data-feather="wifi"></i>
+                            <span class="link-title">Hotspot Manager</span>
+                            <i class="link-arrow" data-feather="chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="hotspot">
+                            <ul class="nav sub-menu">
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>hotspot/generate" class="nav-link">Generate Voucher</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>hotspot/adduser" class="nav-link">Add User</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>hotspot/users" class="nav-link">Users List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>hotspot/active" class="nav-link">Hotspot Active</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= base_url() ?>hotspot/profile" class="nav-link">Hotspot Profile</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="<?= base_url(); ?>report" class="nav-link">
+                            <i class="link-icon" data-feather="book"></i>
+                            <span class="link-title">Report</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="<?= base_url(); ?>router/list" class="nav-link">
+                            <i class="link-icon" data-feather="settings"></i>
+                            <span class="link-title">Settings</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="<?= base_url(); ?>logout" class="nav-link">
+                            <i class="link-icon" data-feather="log-out"></i>
+                            <span class="link-title">Logout</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -90,32 +143,7 @@
                 </a>
                 <div class="navbar-content">
 
-                    <ul class="navbar-nav">
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="wd-30 ht-30 rounded-circle" src="<?php echo base_url(); ?>assets/images/avatar.svg" alt="profile">
-                            </a>
-                            <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
-                                <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
-                                    <div class="mb-3">
-                                        <img class="wd-80 ht-80 rounded-circle" src="<?php echo base_url(); ?>assets/images/avatar.svg" alt="profile">
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="tx-16 fw-bolder"><?= $_SESSION['username']; ?></p>
-                                    </div>
-                                </div>
-                                <ul class="list-unstyled p-1">
-                                    <li class="dropdown-item py-2">
-                                        <a href="<?= base_url() ?>logout" class="text-body ms-0">
-                                            <i class="me-2 icon-md" data-feather="log-out"></i>
-                                            <span>Log Out</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </nav>
             <!-- partial -->
@@ -155,29 +183,21 @@
     <script src="<?php echo base_url(); ?>assets/vendors/sweetalert2/sweetalert2.min.js"></script>
     <!-- End plugin js for this page -->
 
+    <!-- Plugin js for this page -->
+    <script src="<?php echo base_url(); ?>assets/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
+    <!-- End plugin js for this page -->
+
 
 
     <!-- Custom js for this page -->
     <script src="<?php echo base_url(); ?>assets/js/dashboard-dark.js"></script>
     <!-- End custom js for this page -->
-    <script>
-        $("form[name='formedit']").submit(function() {
-            $("#simpanedit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Process...');
-            $("#simpanedit").prop("disabled", true);
-            $("form[name='formedit']")[0].submit();
-        });
-        $('#editModal').on('show.bs.modal', function(e) {
-            $('#rname').html($(e.relatedTarget).data('router_name'));
-            $('#router_id').val($(e.relatedTarget).data('router_id'));
-            $('#router_name').val($(e.relatedTarget).data('router_name'));
-            $('#router_dns').val($(e.relatedTarget).data('router_dns'));
-            $('#router_host').val($(e.relatedTarget).data('router_host'));
-            $('#router_port').val($(e.relatedTarget).data('router_port'));
-            $('#router_user').val($(e.relatedTarget).data('router_user'));
-            $('#router_pass').val($(e.relatedTarget).data('router_pass'));
-            $('#traffic_interface').val($(e.relatedTarget).data('traffic_interface'));
-        });
-    </script>
+    <!-- Custom js for this page -->
+    <script src="<?php echo base_url(); ?>assets/js/data-table.js"></script>
+    <!-- End custom js for this page -->
+
+
 </body>
 
 </html>

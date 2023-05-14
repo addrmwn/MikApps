@@ -80,14 +80,14 @@
 
             </div>
             <div class="card-body">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script src="<?php echo base_url() ?>/assets/js/jquery.min.js"></script>
 
                 <script src="<?php echo base_url() ?>/assets/js/highcharts.js"></script>
                 <script src="<?php echo base_url() ?>/assets/js/highcharts-theme.js"></script>
 
                 <script type="text/javascript">
                     var chart;
-                    var interface = "<?= $_SESSION['traffic_interface'] ?>";
+                    var interface = "<?= $traffics ?>";
                     var n = 3000;
 
                     function requestDatta() {
