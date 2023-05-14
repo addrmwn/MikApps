@@ -56,11 +56,11 @@ $routes->add('traffic', 'DashboardController::traffic');
 $routes->add('hotspot/generate', 'DashboardController::generate');
 $routes->add('hotspot/profile', 'DashboardController::profile');
 $routes->post('hotspot/add_profile', 'DashboardController::add_profile');
+$routes->post('hotspot/prosessinkron', 'DashboardController::prosessinkron');
+
 $routes->add('hotspot/delete_profile/(:any)', 'DashboardController::delete_profile/$1');
 $routes->add('hotspot/edit_profile/(:any)', 'DashboardController::edit_profile/$1');
 $routes->add('hotspot/active', 'DashboardController::active');
-
-$routes->add('hotspot/editm/(:any)', 'DashboardController::editm/$1');
 
 
 
