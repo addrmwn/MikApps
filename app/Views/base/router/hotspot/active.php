@@ -39,7 +39,7 @@
                     <table id="dataTableExample" class="table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th><?= $totalhotspotactive ?></th>
                                 <th>Server</th>
                                 <th>User</th>
                                 <th>Mac Address</th>
@@ -55,7 +55,7 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($getprofile as $row) {
+                            foreach ($hotspotactive as $data) {
                             ?>
                                 <tr>
                                     <td>
@@ -67,9 +67,27 @@
                                     <td><?= formatDTM($data['uptime']) ?></td>
                                     <td><?= formatBytes($data['bytes-in']) ?></td>
                                     <td><?= formatBytes($data['bytes-out']) ?></td>
-                                    <td><?= formatDTM($data['session-time-left']) ?></td>
+
+                                    <?php
+                                    if (isset($data['session-time-left'])) {
+                                        $timeleft = formatDTM($data['session-time-left']);
+                                    } else {
+                                        $timeleft = 'Tidak ada waktu habis';
+                                    }
+                                    ?>
+
+
+                                    <td><?= $timeleft ?></td>
                                     <td><?= $data['login-by'] ?></td>
-                                    <td><?= $data['comment'] ?></td>
+                                    <?php
+                                    if (isset($data['comment'])) {
+                                        $text = $data['comment'];
+                                    } else {
+                                        $text = 'Tidak ada comment';
+                                    }
+                                    ?>
+
+                                    <td><?= $text ?></td>
                                 </tr>
 
                             <?php } ?>

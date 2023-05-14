@@ -57,7 +57,7 @@
                         <div class="d-flex">
                             <div class="mt-2">
                                 <h6>Date & time : <?= $sysdate ?> <?= $systime ?></h6>
-                                <h6>Uptime : <?= $uptime ?> </h6>
+                                <h6>Uptime : <?= formatdtm($uptime) ?> </h6>
                                 <h6>Timezone : <?= $timezone ?> </h6>
 
                             </div>
