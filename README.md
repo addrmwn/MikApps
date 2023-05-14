@@ -10,13 +10,12 @@ Aplikasi ini tidak mengambil data
 
 - user hotspot / voucher
 
-jadi jika ingin menggunakan dan berjalan dengan normal <br>
-mohon hapus user hotspot / voucher <br>
+jadi jika ingin menggunakan dan berjalan dengan normal mohon hapus user hotspot / voucher <br>
 lalu buatlah kembali lewat mikapps
 
 ### Feature
 
-- Hotspot Manager( Progress )
+- Hotspot Manager ( Progress )
 
 - Report Finance ( Soon )
 
