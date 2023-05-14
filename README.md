@@ -2,10 +2,7 @@
 
 MikApps is a application management with API
 
-
 ![Screenshot 2023-05-14 202658](https://github.com/addrmwn/MikApps/assets/50067501/ed2ad898-f745-4c67-a759-f09ac150add6)
-
-
 
 ### Information
 
@@ -21,8 +18,7 @@ lalu buatlah kembali lewat mikapps
 
 ### Feature
 
-- Hotspot ( Progress )
-- PPP ( Soon )
+- Hotspot Manager( Progress )
 - Report Finance ( Soon )
 
 ### Tech Stack
