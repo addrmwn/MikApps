@@ -4,18 +4,23 @@ MikApps is a application management with API
 
 ![Screenshot 2023-05-14 192334](https://github.com/addrmwn/MikApps/assets/50067501/c41072fe-918e-42e3-b47c-1f009318a521)
 
-
-
 ### Information
 
 Aplikasi ini tidak mengambil data
 
-- user profile hotspot
+- profile hotspot
 - user hotspot
 
 jadi jika ingin menggunakan <br>
-mohon hapus user profile yang ada pada mikrotik <br>
+mohon hapus user profile <br>
+dan juga user hotspot yang ada pada mikrotik <br>
 lalu buatlah kembali lewat mikapps
+
+### Feature
+
+- Hotspot ( Progress )
+- PPP ( Soon )
+- Report Finance ( Soon )
 
 ### Tech Stack
 
