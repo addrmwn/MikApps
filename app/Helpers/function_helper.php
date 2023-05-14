@@ -147,6 +147,8 @@ function formatInterval($dtm)
 
 function formatDTM($dtm)
 {
+    $day = ''; // Initialize $day variable
+
     if (substr($dtm, 1, 1) == "d" || substr($dtm, 2, 1) == "d") {
         $day = explode("d", $dtm)[0] . "d";
         $day = str_replace("d", "d ", str_replace("w", "w ", $day));
