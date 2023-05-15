@@ -27,7 +27,7 @@
                 <script>
                     function printV() {
                         var comm = document.getElementById('comment').value;
-                        var url = "<?= base_url('admin/voucher/print/default/') ?>" + comm + "";
+                        var url = "<?= base_url('hotspot/print/default/') ?>" + comm + "";
                         if (comm === "") {
                             alert('Silakan pilih salah satu Comment terlebih dulu!');
                         } else {
@@ -39,7 +39,7 @@
                 <script>
                     function printsmall(a, b) {
                         var comm = document.getElementById('comment').value;
-                        var url = "print_small.php?id=" + comm + "&" + a + "=" + b + "";
+                        var url = "<?= base_url('hotspot/print/small/') ?>" + comm + "";
                         if (comm === "") {
                             alert('Silakan pilih salah satu Comment terlebih dulu!');
                         } else {
@@ -51,7 +51,7 @@
                 <script>
                     function lihat_data() {
                         var comm = document.getElementById('comment').value;
-                        var url = "<?= base_url('admin/voucher/comment/') ?>" + comm + "";
+                        var url = "<?= base_url('hotspot/voucher/comment/') ?>" + comm + "";
 
                         if (comm === "") {
                             alert('Silakan pilih salah satu Comment terlebih dulu!');
@@ -120,7 +120,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
+                                <th>Kode Voucher</th>
                                 <th>Profile</th>
                                 <th>Comment</th>
 

@@ -61,6 +61,23 @@ $routes->post('hotspot/add_profile', 'DashboardController::add_profile');
 $routes->post('hotspot/prosessinkron', 'DashboardController::prosessinkron');
 $routes->add('hotspot/users', 'DashboardController::users');
 
+$routes->add('hotspot/print/default', 'DashboardController::print_default');
+$routes->add('hotspot/print/default/(:any)', 'DashboardController::print_default/$1');
+
+$routes->add('hotspot/print/small', 'DashboardController::print_small');
+$routes->add('hotspot/print/small/(:any)', 'DashboardController::print_small/$1');
+
+$routes->add('hotspot/voucher/comment', 'DashboardController::cekdatabycomment');
+$routes->add('hotspot/voucher/comment/(:any)', 'DashboardController::cekdatabycomment/$1');
+
+
+$routes->add('hotspot/voucher/deletevoucherbycomment', 'DashboardController::deletevoucherbycomment');
+$routes->add('hotspot/voucher/deletevoucherbycomment/(:any)', 'DashboardController::deletevoucherbycomment/$1');
+
+
+
+
+
 $routes->add('hotspot/delete_profile/(:any)', 'DashboardController::delete_profile/$1');
 $routes->add('hotspot/edit_profile/(:any)', 'DashboardController::edit_profile/$1');
 $routes->add('hotspot/active', 'DashboardController::active');

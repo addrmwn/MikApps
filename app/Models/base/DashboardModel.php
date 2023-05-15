@@ -48,6 +48,14 @@ class DashboardModel extends Model
         return $query->getResult();
     }
 
+    public function wherecomment($comment)
+    {
+        $builder = $this->voucher;
+        $builder->where('comment', $comment);
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
 
 
     public function getservice()
@@ -118,6 +126,13 @@ class DashboardModel extends Model
     {
         $builder = $this->service;
         $builder->where('service', $name);
+        return $builder->delete();
+    }
+
+    public function deletevoucher($data)
+    {
+        $builder = $this->voucher;
+        $builder->where('comment', $data);
         return $builder->delete();
     }
 

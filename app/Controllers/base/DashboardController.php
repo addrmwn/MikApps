@@ -619,7 +619,6 @@ class DashboardController extends BaseController
     }
 
 
-
     public function generate()
     {
         $dashboardmodel = new DashboardModel;
@@ -682,7 +681,7 @@ class DashboardController extends BaseController
                 $timelimit = $this->request->getPost('timelimit');
                 $comment = $this->request->getPost('comment');
 
-                $cmnt = "vc-" . rand(100, 999)  . "-" .  date("m.d.y") . "-" . $comment;
+                $cmnt = "vc-" . rand(100, 999)  . "-" .  date("d-m-y") . "-" . $comment;
 
 
                 $checkprofile = $dashboardmodel->whereservice($profile);
@@ -751,6 +750,139 @@ class DashboardController extends BaseController
             return redirect()->to(base_url('hotspot/generate'));
         }
     }
+
+    public function print_default($comment = null)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        if ($comment == null) {
+            return redirect()->to(base_url('hotspot/users'));
+        } else {
+            $checkserv = $dashboardmodel->wherecomment($comment);
+
+            if (count($checkserv) == 0) {
+                return redirect()->to(base_url('hotspot/users'));
+            } else {
+                foreach ($checkserv as $dataserv) {
+                    $service = $dataserv->service;
+                }
+
+                $checkservice = $dashboardmodel->whereservice($service);
+                $router = $dashboardmodel->get_router();
+
+                $data = [
+                    'title' => 'Print Voucher ' . $comment,
+                    'comment' => $checkserv,
+                    'service' => $checkservice,
+                    'router' => $router,
+                ];
+
+                return view('base/router/hotspot/print/default', $data);
+            }
+        }
+    }
+
+    public function print_small($comment = null)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        if ($comment == null) {
+            return redirect()->to(base_url('hotspot/users'));
+        } else {
+            $checkserv = $dashboardmodel->wherecomment($comment);
+            if (count($checkserv) == 0) {
+                return redirect()->to(base_url('hotspot/users'));
+            } else {
+                foreach ($checkserv as $dataserv) {
+                    $service = $dataserv->service;
+                }
+
+                $checkservice = $dashboardmodel->whereservice($service);
+                $router = $dashboardmodel->get_router();
+
+                $data = [
+                    'title' => 'Print Voucher ' . $comment,
+                    'comment' => $checkserv,
+                    'service' => $checkservice,
+                    'router' => $router,
+                ];
+
+                return view('base/router/hotspot/print/small', $data);
+            }
+        }
+    }
+
+    public function cekdatabycomment($comment = null)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        if ($comment == null) {
+            return redirect()->to(base_url('hotspot/users'));
+        } else {
+            $check = $dashboardmodel->wherecomment($comment);
+
+            if (count($check) == 0) {
+                $this->session->setFlashdata('error', ['Tidak ada data comment tersebut']);
+
+                return redirect()->to(base_url('hotspot/users'));
+            } else {
+                $data = [
+                    'title' => 'Cek Voucher ' . $comment,
+                    'totalhotspotuser' => count($check),
+                    'comment' => $check,
+                    'view' => 'base/router/hotspot/cekdatabycomment'
+                ];
+
+                return view('base/templates/layout', $data);
+            }
+        }
+    }
+
+    public function deletevoucherbycomment($comment = null)
+    {
+        $dashboardmodel = new DashboardModel;
+
+        if ($comment == null) {
+            return redirect()->to(base_url('hotspot/users'));
+        } else {
+
+            $data = $dashboardmodel->wherecomment($comment);
+            $total = count($data);
+
+            $router = $dashboardmodel->get_router();
+
+            foreach ($router as $row) {
+                $host = $row->ip;
+                $uname = $row->username;
+                $pass = decrypt($row->password);
+            }
+
+            if ($this->ros->connect($host, $uname, $pass)) {
+
+                $getuser = $this->ros->comm("/ip/hotspot/user/print", array(
+                    "?comment" => "$comment",
+                    "?uptime" => "00:00:00",
+                ));
+
+                for ($i = 0; $i < $total; $i++) {
+                    $usersdetails = $getuser[$i];
+                    $uid = $usersdetails['.id'];
+
+                    $this->ros->comm("/ip/hotspot/user/remove", array(
+                        ".id" => "$uid",
+                    ));
+                }
+
+                $dashboardmodel->deletevoucher($comment);
+                $this->session->setFlashdata('success', ['Berhasil menghapus data voucher']);
+                return redirect()->to(base_url('hotspot/users'));
+            } else {
+                $this->session->setFlashdata('error', ['Router tidak merespon']);
+                return redirect()->to(base_url('router/list'));
+            }
+        }
+    }
+
 
     public function users()
     {

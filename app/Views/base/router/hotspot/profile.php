@@ -3,6 +3,16 @@
 
         <div class="card">
             <div class="card-body">
+                <div class="col-lg-6">
+                    <div class="example">
+                        <button type="button" class="btn btn-primary mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#myModal"><i class="mdi mdi-account-multiple-plus"></i> Add Profile</button>
+                        <button type="button" class="btn btn-secondary mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#sinkron"><i class="mdi mdi-sync"></i> Sinkronisasi Profile</button>
+                    </div>
+
+
+                </div>
+                <hr>
+
                 <?php
                 $session = session();
                 $errors = $session->getFlashdata('error');
@@ -174,16 +184,8 @@
                 </div><!-- /.modal -->
 
                 <h6 class="card-title">Hotspot Profile</h6>
-                <div class="col-lg-6">
-                    <div class="example">
 
 
-                        <button type="button" class="btn btn-primary mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#myModal"><i class="mdi mdi-account-multiple-plus"></i> Add Profile</button>
-                        <button type="button" class="btn btn-secondary mb-1 mb-md-0" data-bs-toggle="modal" data-bs-target="#sinkron"><i class="mdi mdi-sync"></i> Sinkronisasi Profile</button>
-                    </div>
-
-
-                </div>
                 <div class="table-responsive">
                     <table id="dataTableExample" class="table">
                         <thead>
