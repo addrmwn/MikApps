@@ -32,6 +32,24 @@ class DashboardModel extends Model
         return $query->getResult();
     }
 
+    public function hotspotuser()
+    {
+        $builder = $this->voucher;
+        $builder->orderBy('id', 'ASC');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function comment()
+    {
+        $builder = $this->voucher;
+        $builder->groupBy('comment', 'DESC');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+
+
     public function getservice()
     {
         $builder = $this->service;

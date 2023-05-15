@@ -664,83 +664,107 @@ class DashboardController extends BaseController
         $dashboardmodel = new DashboardModel;
 
         $quantity = $this->request->getPost('quantity');
-        $server = $this->request->getPost('server');
-        $lenght = $this->request->getPost('lenght');
-        $character = $this->request->getPost('character');
-        $profile = $this->request->getPost('profile');
-        $timelimit = $this->request->getPost('timelimit');
-        $comment = $this->request->getPost('comment');
+        if (isset($quantity)) {
+            $router = $dashboardmodel->get_router();
 
-        $router = $dashboardmodel->get_router();
-
-        foreach ($router as $row) {
-            $host = $row->ip;
-            $uname = $row->username;
-            $pass = decrypt($row->password);
-        }
-
-        $checkprofile = $dashboardmodel->whereservice($profile);
-
-        foreach ($checkprofile as $dataprofile) {
-            $name = $dataprofile->service;
-            $price = $dataprofile->price;
-        }
-
-        for ($n = 1; $n <= $quantity; $n++) {
-
-            if ($character == 'lower1') {
-                $voc[$n] = randLC($lenght);
-            } else if ($character == 'upper1') {
-                $voc[$n] = randUC($lenght);
-            } else if ($character == 'upplow1') {
-                $voc[$n] = randULC($lenght);
-            } else if ($character == 'mix') {
-                $voc[$n] = randNLC($lenght);
-            } else if ($character == 'mix1') {
-                $voc[$n] = randNUC($lenght);
-            } else if ($character == 'mix2') {
-                $voc[$n] = randNULC($lenght);
+            foreach ($router as $row) {
+                $host = $row->ip;
+                $uname = $row->username;
+                $pass = decrypt($row->password);
             }
 
-            if ($timelimit == "") {
-                $time = "0";
-            } else {
-                $time = $timelimit;
-            }
-
-            $oid = random_number(3) . random_number(4);
-
-            $cmnt = "vc-" . rand(100, 999) . "-" . date("m.d.y") . "-" . $comment;
             if ($this->ros->connect($host, $uname, $pass)) {
 
+                $server = $this->request->getPost('server');
+                $lenght = $this->request->getPost('lenght');
+                $character = $this->request->getPost('character');
+                $profile = $this->request->getPost('profile');
+                $timelimit = $this->request->getPost('timelimit');
+                $comment = $this->request->getPost('comment');
 
-                $this->ros->comm("/ip/hotspot/user/add", array(
-                    'server' => $server,
-                    'name' => $voc[$n],
-                    'password' => $voc[$n],
-                    'profile' => $profile,
-                    'limit-uptime' => $time,
-                    'comment' => $cmnt
-                ));
+                $cmnt = "vc-" . rand(100, 999)  . "-" .  date("m.d.y") . "-" . $comment;
 
-                $data = array(
-                    'oid' => $oid,
-                    'service' => $name,
-                    'code' => $voc[$n],
-                    'price' => $price,
-                    'status' => '0',
-                    'datetime' => $date,
-                    'comment' => $cmnt
-                );
 
-                $save = $dashboardmodel->insertvoucher($data);
+                $checkprofile = $dashboardmodel->whereservice($profile);
+
+                foreach ($checkprofile as $dataprofile) {
+                    $name = $dataprofile->service;
+                    $price = $dataprofile->price;
+                }
+
+                if ($timelimit == "") {
+                    $time = "0";
+                } else {
+                    $time = $timelimit;
+                }
+
+                for ($n = 1; $n <= $quantity; $n++) {
+                    $oid = random_number(3) . random_number(4);
+
+                    if ($character == 'lower1') {
+                        $voc[$n] = randLC($lenght);
+                    } else if ($character == 'upper1') {
+                        $voc[$n] = randUC($lenght);
+                    } else if ($character == 'upplow1') {
+                        $voc[$n] = randULC($lenght);
+                    } else if ($character == 'mix') {
+                        $voc[$n] = randNLC($lenght);
+                    } else if ($character == 'mix1') {
+                        $voc[$n] = randNUC($lenght);
+                    } else if ($character == 'mix2') {
+                        $voc[$n] = randNULC($lenght);
+                    }
+                }
+
+
+                for ($n = 1; $n <= $quantity; $n++) {
+
+                    $this->ros->comm("/ip/hotspot/user/add", array(
+                        'server' => $server,
+                        'name' => $voc[$n],
+                        'password' => $voc[$n],
+                        'profile' => $profile,
+                        'limit-uptime' => $time,
+                        'comment' => $cmnt
+                    ));
+
+                    $data = array(
+                        'oid' => $oid,
+                        'service' => $name,
+                        'code' => $voc[$n],
+                        'price' => $price,
+                        'status' => '0',
+                        'datetime' => $date,
+                        'comment' => $cmnt
+                    );
+
+                    $save = $dashboardmodel->insertvoucher($data);
+                }
+                $this->session->setFlashdata('success', ['Berhasil generate voucher']);
+                return redirect()->to(base_url('hotspot/generate'));
             } else {
                 $this->session->setFlashdata('error', ['Router tidak merespon']);
                 return redirect()->to(base_url('router/list'));
             }
+        } else {
+            $this->session->setFlashdata('error', ['Generate Voucher gagal']);
+            return redirect()->to(base_url('hotspot/generate'));
         }
-        $this->session->setFlashdata('success', ['Berhasil generate voucher']);
-        return redirect()->to(base_url('hotspot/generate'));
+    }
+
+    public function users()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $data = [
+            'title' => 'Hotspot Active',
+            'hotspotuser' => $dashboardmodel->hotspotuser(),
+            'comment' => $dashboardmodel->comment(),
+
+            'view' => 'base/router/hotspot/users'
+        ];
+
+        return view('base/templates/layout', $data);
     }
 
 

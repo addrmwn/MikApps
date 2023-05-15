@@ -195,6 +195,7 @@
     <!-- End custom js for this page -->
     <!-- Custom js for this page -->
     <script src="<?php echo base_url(); ?>assets/js/data-table.js"></script>
+
     <!-- End custom js for this page -->
 
 

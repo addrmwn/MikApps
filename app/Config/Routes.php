@@ -59,6 +59,7 @@ $routes->post('hotspot/prosesgenerate', 'DashboardController::prosesgenerate');
 $routes->add('hotspot/profile', 'DashboardController::profile');
 $routes->post('hotspot/add_profile', 'DashboardController::add_profile');
 $routes->post('hotspot/prosessinkron', 'DashboardController::prosessinkron');
+$routes->add('hotspot/users', 'DashboardController::users');
 
 $routes->add('hotspot/delete_profile/(:any)', 'DashboardController::delete_profile/$1');
 $routes->add('hotspot/edit_profile/(:any)', 'DashboardController::edit_profile/$1');
