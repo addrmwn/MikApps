@@ -13,10 +13,14 @@
                             <?php
 
                             foreach ($comment as $data) {
+                                if ($data->comment == null) {
                             ?>
-                                <option value="<?= $data->comment; ?>"><?= $data->comment; ?></option>
+                                <?php } else { ?>
 
-                            <?php } ?>
+                                    <option value="<?= $data->comment; ?>"><?= $data->comment; ?></option>
+
+                            <?php }
+                            } ?>
 
                         </select>
 

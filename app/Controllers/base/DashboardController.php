@@ -7,6 +7,7 @@ use App\Controllers\BaseController;
 use App\Models\base\DashboardModel;
 use App\Libraries\RouterosAPI;
 use CodeIgniter\I18n\Time;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends BaseController
 {
@@ -310,6 +311,123 @@ class DashboardController extends BaseController
             array_push($result, $rows);
             array_push($result, $rows2);
             print json_encode($result);
+        }
+    }
+
+    public function adduser()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $getprofile = $dashboardmodel->getservice();
+
+
+        if ($getprofile == null) {
+            $this->session->setFlashdata('error', ['Belum ada database profile, silahkan tambah profile atau sinkronisasi terlebih dahulu']);
+
+            return redirect()->to(base_url('hotspot/profile'));
+        } else {
+            $router = $dashboardmodel->get_router();
+            foreach ($router as $row) {
+                $host = $row->ip;
+                $uname = $row->username;
+                $pass = decrypt($row->password);
+            }
+
+            if ($this->ros->connect($host, $uname, $pass)) {
+                $serverhotspot = $this->ros->comm("/ip/hotspot/print");
+
+                $data = [
+                    'title' => 'Add User',
+                    'server' => $serverhotspot,
+                    'profile' => $getprofile,
+                    'view' => 'base/router/hotspot/adduser'
+                ];
+
+                return view('base/templates/layout', $data);
+            } else {
+                $this->session->setFlashdata('error', ['Router tidak merespon']);
+                return redirect()->to(base_url('router/list'));
+            }
+        }
+    }
+
+    public function prosesadduser()
+    {
+        $date = Time::now('Asia/Jakarta');
+        $dashboardmodel = new DashboardModel;
+
+        $code = $this->request->getPost('code');
+        $profile = $this->request->getPost('profile');
+
+
+        if (empty($code) || empty($profile)) {
+            $this->session->setFlashdata('error', ['Gagal membuat user']);
+            return redirect()->to(base_url('hotspot/adduser'));
+        } else {
+
+            $router = $dashboardmodel->get_router();
+
+            foreach ($router as $row) {
+                $host = $row->ip;
+                $uname = $row->username;
+                $pass = decrypt($row->password);
+            }
+
+            if ($this->ros->connect($host, $uname, $pass)) {
+
+                $server = $this->request->getPost('server');
+                $timelimit = $this->request->getPost('timelimit');
+
+                $getprofile = $this->ros->comm("/ip/hotspot/user/profile/print", array(
+                    "?name" => $profile,
+                ));
+
+                if ($getprofile == null) {
+                    $dashboardmodel->delete_profile($profile);
+                    $this->session->setFlashdata('error', ['Profile tidak ditemukan pada mikrotik dan berhasil di hapus pada database']);
+                    return redirect()->to(base_url('hotspot/profile'));
+                } else {
+                    $oid = random_number(3) . random_number(4);
+
+                    $checkprofile = $dashboardmodel->whereservice($profile);
+
+                    foreach ($checkprofile as $dataprofile) {
+                        $name = $dataprofile->service;
+                        $price = $dataprofile->price;
+                    }
+
+
+                    if ($timelimit == "") {
+                        $time = "0";
+                    } else {
+                        $time = $timelimit;
+                    }
+
+                    $this->ros->comm("/ip/hotspot/user/add", array(
+                        'server' => $server,
+                        'name' => $code,
+                        'password' => $code,
+                        'profile' => $profile,
+                        'limit-uptime' => $time,
+                    ));
+
+                    $data = array(
+                        'oid' => $oid,
+                        'service' => $name,
+                        'code' => $code,
+                        'price' => $price,
+                        'status' => '0',
+                        'datetime' => $date,
+                    );
+
+                    $dashboardmodel->insertvoucher($data);
+                    $this->session->setFlashdata('success', ['Berhasil generate voucher']);
+                    return redirect()->to(base_url('hotspot/generate'));
+                }
+            } else {
+                $this->session->setFlashdata('error', ['Router tidak merespon']);
+                return redirect()->to(base_url('router/list'));
+            }
         }
     }
 

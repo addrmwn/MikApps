@@ -33,17 +33,18 @@
                             <div class="card overflow-hidden">
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h3 class="card-title"><i class="mdi mdi-account-multiple-plus"></i> Generate Voucher</h3>
+                                    <h3 class="card-title"><i class="mdi mdi-account"></i> Add User Custom Code</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form method="post" action="<?php echo base_url('hotspot/prosesgenerate'); ?>">
+                                    <form method="post" action="<?php echo base_url('hotspot/prosesadduser'); ?>">
 
                                         <div class="form-group mb-3">
-                                            <label class="col-md-12 control-label"> Quantity / Jumlah Voucher</label>
+                                            <label class="col-md-12 control-label"> Custom Code</label>
                                             <div class="col-md-12">
-                                                <input class="form-control" type="text" autocomplete="off" name="quantity" id="quantity" placeholder="Masukan jumlah ( maksimal 100 ) ">
+                                                <input class="form-control" type="text" autocomplete="off" name="code" id="code" placeholder="Masukan kode voucher yang ingin dibuat">
                                             </div>
                                         </div>
+
 
                                         <div class="form-group mb-3">
                                             <label class="col-md-12 control-label">Server</label>
@@ -57,33 +58,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group mb-3">
-                                            <label class="col-md-12 control-label">Panjang tiap voucher</label>
-                                            <div class="col-md-12">
-                                                <select class="form-select" aria-label="Default select example" name="lenght" id="lenght">
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                </select>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group mb-3">
-                                            <label class="col-md-12 control-label">Karakter</label>
-                                            <div class="col-md-12">
-                                                <select class="form-select" aria-label="Default select example" name="character" id="character">
-                                                    <option value="lower1">Random abcd2345</option>
-                                                    <option value="upper1">Random ABCD2345</option>
-                                                    <option value="upplow1">Random aBcD2345</option>
-                                                    <option value="mix">Random 5ab2c34d</option>
-                                                    <option value="mix1">Random 5AB2C34D</option>
-                                                    <option value="mix2">Random 5aB2c34D</option>
-                                                </select>
-                                            </div>
-                                        </div>
 
                                         <div class="form-group mb-3">
                                             <label class="col-md-12 control-label">Profile</label>
@@ -101,13 +76,6 @@
                                             <label class="col-md-12 control-label"> TimeLimit ( Waktu Aktif Voucher )</label>
                                             <div class="col-md-12">
                                                 <input class="form-control" type="text" autocomplete="off" name="timelimit" id="timelimit" placeholder="Example : 1h/3h/1d/3d/7d">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group mb-3">
-                                            <label class="col-md-12 control-label"> Comment</label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" type="text" autocomplete="off" onchange="remSpace();" name="comment" id="comment" required>
                                             </div>
                                         </div>
 
@@ -130,22 +98,11 @@
                                 </div>
                                 <div class="card-body">
                                     <ul>
-                                        <li>Jumlah maksimal hanya 100</li>
+                                        <li>Custom Code tidak boleh menggunakan spasi, gunakan simbol strip untuk mengubah spasi</li>
                                         <li>Timelimit tidak boleh lebih besar dari validity, jika anda ragu mohon tidak mengisikan timelimit</li>
-                                        <li>Comment tidak boleh mengandung spasi, ganti spasi dengan simbol strip ( - )</li>
-                                        <li>Jangan klik submit jika proses sedang berlangsung, karena itu hanya menyebabkan proses yang lama</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <!-- ROW END -->
-                    <script type="text/javascript">
-                        function remSpace() {
-                            var upName = document.getElementsByName("comment")[0];
-                            var newUpName = upName.value.replace(/\s/g, "-");
-                            upName.value = newUpName;
-                            upName.focus();
-                        }
-                    </script>

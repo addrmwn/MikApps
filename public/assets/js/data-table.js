@@ -1,10 +1,10 @@
 // npm package: datatables.net-bs5
 // github link: https://github.com/DataTables/Dist-DataTables-Bootstrap5
 
-$(function() {
+$(function () {
   'use strict';
 
-  $(function() {
+  $(function () {
     $('#dataTableExample').DataTable({
       "aLengthMenu": [
         [10, 30, 50, -1],
@@ -15,7 +15,7 @@ $(function() {
         search: ""
       }
     });
-    $('#dataTableExample').each(function() {
+    $('#dataTableExample').each(function () {
       var datatable = $(this);
       // SEARCH - Add the placeholder for Search and Turn this into in-line form control
       var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
