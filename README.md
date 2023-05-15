@@ -15,9 +15,12 @@ lalu buatlah kembali lewat mikapps
 
 ### Feature
 
-- Hotspot Manager ( Progress )
+| Fitur             | Tersedia                                                               |
+| ----------------- | ------------------------------------------------------------------ |
+| Hotspot Manager | :white_check_mark: Finish |
+| Whatsapp Manager | :negative_squared_cross_mark: Coming Soon |
+| Report Finance | :negative_squared_cross_mark: Progress |
 
-- Report Finance ( Soon )
 
 ### Tech Stack
 
