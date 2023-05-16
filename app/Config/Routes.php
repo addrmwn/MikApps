@@ -73,15 +73,10 @@ $routes->add('hotspot/delete_profile/(:any)', 'DashboardController::delete_profi
 $routes->add('hotspot/edit_profile/(:any)', 'DashboardController::edit_profile/$1');
 $routes->add('hotspot/active', 'DashboardController::active');
 
+// Report Finance 
 
-
-
-
-
-
-
-
-
+$routes->add('report', 'DashboardController::report');
+$routes->post('report/filter', 'DashboardController::report_filter');
 
 
 

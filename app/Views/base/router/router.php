@@ -74,7 +74,7 @@
 
                                                     <form style="display:inline !important;" class="me-3" id="" action="delete_router" method="post">
                                                         <input type="hidden" value="<?= $row->id ?>" name="router_id" />
-                                                        <a class="text-white me-3" href="#/" onclick="Swal.fire({title: 'Delete <?= $row->nama ?>?',text: 'Semua data transaksi pada router ini akan terhapus!',icon: 'warning',showCancelButton: true,cancelButtonColor: '#d33',confirmButtonText: 'Yes, delete it!'}).then((result) => {if (result.isConfirmed) {this.closest('form').submit();return false;}})">
+                                                        <a class="text-white me-3" href="#/" onclick="Swal.fire({title: 'Delete <?= $row->nama ?>?',text: 'Data Router ini akan terhapus!',icon: 'warning',showCancelButton: true,cancelButtonColor: '#d33',confirmButtonText: 'Yes, delete it!'}).then((result) => {if (result.isConfirmed) {this.closest('form').submit();return false;}})">
                                                             <i class="mdi mdi-delete"></i> Delete
                                                         </a>
                                                     </form>

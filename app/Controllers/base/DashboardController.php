@@ -1017,6 +1017,83 @@ class DashboardController extends BaseController
         return view('base/templates/layout', $data);
     }
 
+    public function report()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $data = [
+            'title' => 'Report Finance',
+            'voucher' => $dashboardmodel->datavcrmonth(),
+            'tahun' => $dashboardmodel->gettahunmasuk(),
+            'credit' => $dashboardmodel->credit(),
+            'hotspotuser' => $dashboardmodel->hotspotuser(),
+            'comment' => $dashboardmodel->comment(),
+
+            'view' => 'base/report/home'
+        ];
+
+        return view('base/templates/layout', $data);
+    }
+
+    public function report_filter()
+    {
+        $dashboardmodel = new DashboardModel;
+
+        $bulan = $this->request->getPost('bulan');
+        $tahun = $this->request->getPost('tahun');
+
+        if (empty($bulan) || empty($tahun)) {
+            return redirect()->to(base_url('report'));
+        } else {
+            if ($bulan ==  '1') {
+                $sebut = 'Januari';
+            } else if ($bulan == '2') {
+                $sebut = 'Februari';
+            } else if ($bulan == '3') {
+                $sebut = 'Maret';
+            } else if ($bulan == '4') {
+                $sebut = 'April';
+            } else if ($bulan == '5') {
+                $sebut = 'Mei';
+            } else if ($bulan == '6') {
+                $sebut = 'Juni';
+            } else if ($bulan == '7') {
+                $sebut = 'Juli';
+            } else if ($bulan == '8') {
+                $sebut = 'Agustus';
+            } else if ($bulan == '9') {
+                $sebut = 'September';
+            } else if ($bulan == '10') {
+                $sebut = 'Oktober';
+            } else if ($bulan == '11') {
+                $sebut = 'November';
+            } else if ($bulan == '12') {
+                $sebut = 'Desember';
+            }
+
+            $data = [
+                'title' => 'Report Finance',
+                'subtitle' => $sebut,
+                'tahun' => $tahun,
+                'datafilter' => $dashboardmodel->filter($bulan, $tahun),
+                'credit' => $dashboardmodel->creditfilter($bulan, $tahun),
+                'view' => 'base/report/filter'
+            ];
+            if (is_array($data['datafilter'])) {
+                $row_count = count($data['datafilter']);
+            } else {
+                $row_count = $data['datafilter']->getNumRows();
+            }
+
+            if ($row_count == 0) {
+                $this->session->setFlashdata('error', ['Tidak ada data di bulan tersebut']);
+                return redirect()->to(base_url('report'));
+            } else {
+                return view('base/templates/layout', $data);
+            }
+        }
+    }
+
 
     public function logout()
     {

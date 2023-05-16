@@ -12,6 +12,7 @@ class DashboardModel extends Model
         parent::__construct();
         $db  = \Config\Database::connect();
         $this->users = $db->table('users');
+        $this->report = $db->table('report');
         $this->voucher = $db->table('voucher');
         $this->service =  $db->table('services');
         $this->router = $db->table('router');
@@ -141,5 +142,61 @@ class DashboardModel extends Model
         $builder = $this->service;
         $builder->where('service', $name);
         return $builder->update($data);
+    }
+
+    public function datavcrmonth()
+    {
+        $builder = $this->report;
+        $builder->where('MONTH(report.date)', date('m'));
+        $builder->where('YEAR(report.date)', date('Y'));
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function gettahunmasuk()
+    {
+        $builder = $this->report;
+        $builder->select('YEAR(date) AS tahun');
+        $builder->groupBy('YEAR(date)');
+        $builder->orderBy('YEAR(date)', 'ASC');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function credit()
+    {
+        $builder = $this->report;
+        $builder->selectSum('price', 'total');
+        $builder->where('MONTH(report.date)', date('m'));
+        $builder->where('YEAR(report.date)', date('Y'));
+        $query = $builder->get();
+        $row = $query->getRow();
+        return $row->total;
+    }
+
+    public function filter($bulan, $tahun)
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->where('MONTH(date)', $bulan)
+            ->where('YEAR(date)', $tahun)
+            ->orderBy('date', 'ASC')
+            ->get();
+
+        return $query->getResult();
+    }
+
+    public function creditfilter($bulan, $tahun)
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->selectSum('price', 'total')
+            ->where('MONTH(date)', $bulan)
+            ->where('YEAR(date)', $tahun)
+            ->get();
+
+        return $query->getRow()->total;
     }
 }
