@@ -18,7 +18,6 @@ lalu buatlah kembali lewat mikapps
 | Fitur             | Tersedia                                                               |
 | ----------------- | ------------------------------------------------------------------ |
 | Hotspot Manager | :white_check_mark: Finish |
-| Whatsapp Manager | :negative_squared_cross_mark: Coming Soon |
 | Report Finance | :white_check_mark: Finish |
 
 
