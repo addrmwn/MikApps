@@ -266,6 +266,12 @@ class DashboardController extends BaseController
                 'version' => $resource['version'],
                 'interface' => $getinterface,
                 'traffics' => $monitor,
+                'month' => $dashboardmodel->month(),
+                'vcrmonth' => $dashboardmodel->vcrmonth(),
+                'today' => $dashboardmodel->today(),
+                'vcrtoday' => $dashboardmodel->vcrtoday(),
+                'yesterday' => $dashboardmodel->yesterday(),
+                'vcrystrdy' => $dashboardmodel->vcrystrdy(),
                 'view' => 'base/dashboard/home',
 
             ];
@@ -421,8 +427,8 @@ class DashboardController extends BaseController
                     );
 
                     $dashboardmodel->insertvoucher($data);
-                    $this->session->setFlashdata('success', ['Berhasil generate voucher']);
-                    return redirect()->to(base_url('hotspot/generate'));
+                    $this->session->setFlashdata('success', ['Berhasil membuat user baru']);
+                    return redirect()->to(base_url('hotspot/users'));
                 }
             } else {
                 $this->session->setFlashdata('error', ['Router tidak merespon']);

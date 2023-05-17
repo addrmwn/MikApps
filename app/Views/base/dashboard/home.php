@@ -72,8 +72,87 @@
             </div>
         </div>
     </div>
+
+    <div class="col-12 col-xl-12 stretch-card">
+        <div class="row flex-grow-1">
+            <div class="col-md-4 grid-margin stretch-card">
+
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title"><i data-feather="book"></i> Report Harian </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="mt-2">
+                                <h6>Pemakaian Hari ini : <?= $vcrtoday ?> Voucher</h6>
+                                <h6>Pendapatan Hari ini : Rp <?= number_format($today); ?></h6>
+
+                            </div>
+                            <div class="ms-auto">
+                                <div class="chart-wrapper mt-3">
+                                    <i style="font-size:15rem" data-feather="book"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 grid-margin stretch-card">
+
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title"><i data-feather="book"></i> Report Kemarin </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="mt-2">
+                                <h6>Pemakaian Kemarin : <?= $vcrystrdy ?> Voucher</h6>
+                                <h6>Pendapatan Kemarin : Rp <?= number_format($yesterday); ?></h6>
+
+                            </div>
+                            <div class="ms-auto">
+                                <div class="chart-wrapper mt-3">
+                                    <i style="font-size:15rem" data-feather="book"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 grid-margin stretch-card">
+
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title"><i data-feather="book"></i> Report Bulanan </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="mt-2">
+                                <h6>Pemakaian Bulan ini : <?= $vcrmonth ?> Voucher</h6>
+                                <h6>Pendapatan Bulan ini : Rp <?= number_format($month); ?></h6>
+
+                            </div>
+                            <div class="ms-auto">
+                                <div class="chart-wrapper mt-3">
+                                    <i style="font-size:15rem" data-feather="book"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- COL END -->
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin stretch-card">
+
         <div class="card" style="height:419px">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title"><i class="fe fe-monitor"></i> Traffic Monitor</h3>
@@ -206,5 +285,8 @@
             </div>
         </div>
     </div>
-    <!-- COL END -->
-</div> <!-- row -->
+
+
+</div>
+
+<!-- COL END -->

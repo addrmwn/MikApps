@@ -86,6 +86,13 @@ class DashboardModel extends Model
         return $builder->insert($save);
     }
 
+    public function insertreport($save)
+    {
+        $builder = $this->report;
+        return $builder->insert($save);
+    }
+
+
     public function auth_router($data)
     {
         $builder = $this->router;
@@ -135,6 +142,28 @@ class DashboardModel extends Model
         $builder = $this->voucher;
         $builder->where('comment', $data);
         return $builder->delete();
+    }
+
+    public function deletevouchersingle($data)
+    {
+        $builder = $this->voucher;
+        $builder->where('code', $data);
+        return $builder->delete();
+    }
+
+    public function statusvoucher()
+    {
+        $builder = $this->voucher;
+        $builder->where('status', '0');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function voucherall()
+    {
+        $builder = $this->voucher;
+        $query = $builder->get();
+        return $query->getResult();
     }
 
     public function update_profile($name, $data)
@@ -198,5 +227,83 @@ class DashboardModel extends Model
             ->get();
 
         return $query->getRow()->total;
+    }
+
+    public function vcrmonth()
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->select('*')
+            ->where('MONTH(report.date)', date('m'))
+            ->where('YEAR(report.date)', date('Y'))
+            ->get();
+
+        return $query->getNumRows();
+    }
+
+    public function today()
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->selectSum('price', 'total')
+            ->where('DATE(date)', date('Y-m-d'))
+            ->get();
+
+        $result = $query->getRow();
+
+        return $result->total;
+    }
+
+    public function vcrtoday()
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->where('DATE(date)', date('Y-m-d'))
+            ->get();
+
+        return $query->getNumRows();
+    }
+
+    public function yesterday()
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->selectSum('price', 'total')
+            ->where('DATE(date)', date('Y-m-d', strtotime('-1 day')))
+            ->get();
+
+        $result = $query->getRow();
+
+        return $result->total;
+    }
+
+    public function vcrystrdy()
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->where('DATE(date)', date('Y-m-d', strtotime('-1 day')))
+            ->get();
+
+        return $query->getNumRows();
+    }
+
+    public function month()
+    {
+        $builder = $this->report;
+
+        $query = $builder
+            ->selectSum('price', 'total')
+            ->where('MONTH(report.date)', date('m'))
+            ->where('YEAR(report.date)', date('Y'))
+            ->get();
+
+        $result = $query->getRow();
+
+        return $result->total;
     }
 }
