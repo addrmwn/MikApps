@@ -4,6 +4,15 @@ MikApps is a application management with API and cronjob
 
 ![Screenshot 2023-05-14 202658](https://github.com/addrmwn/MikApps/assets/50067501/ed2ad898-f745-4c67-a759-f09ac150add6)
 
+### How to run report
+
+untuk menjalankan report adalah membuat cronjob pada url dan menambahkan auto/cekvoucher
+
+contoh :
+http://localhost:8080/auto/cekvoucher
+
+Cek Voucher di atas untuk menjalankan voucher yang sedang di pakai lalu menghapus pada database voucher dan memasukan voucher tersebut ke dalam tabel report
+
 ### Information
 
 Aplikasi ini tidak mengambil data
@@ -15,11 +24,10 @@ lalu buatlah kembali lewat mikapps
 
 ### Feature
 
-| Fitur             | Tersedia                                                               |
-| ----------------- | ------------------------------------------------------------------ |
+| Fitur           | Tersedia                  |
+| --------------- | ------------------------- |
 | Hotspot Manager | :white_check_mark: Finish |
-| Report Finance | :white_check_mark: Finish |
-
+| Report Finance  | :white_check_mark: Finish |
 
 ### Tech Stack
 
