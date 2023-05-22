@@ -1,9 +1,29 @@
 <div class="row">
 
     <div class="col-12 col-xl-12 stretch-card">
-
         <div class="row flex-grow-1">
-            <div class="col-md-4 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="card-title"><i data-feather="book"></i> Pendapatan tahun ini</h3>
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="mt-2">
+                                <h6>Rp <?= number_format($credityears) ?></h6>
+                            </div>
+                            <div class="ms-auto">
+                                <div class="chart-wrapper mt-3">
+                                    <i style="font-size:15rem" data-feather="book"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="card-title"><i data-feather="book"></i> Pendapatan bulan ini</h3>
@@ -26,6 +46,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-12 col-xl-12 stretch-card">
         <div class="row flex-grow-1">
             <div class="col-col-lg-12 grid-margin stretch-card">

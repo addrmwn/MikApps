@@ -155,7 +155,7 @@
 
         <div class="card" style="height:419px">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="card-title"><i class="fe fe-monitor"></i> Traffic Monitor</h3>
+                <h3 class="card-title"><i data-feather="monitor"></i> Traffic Monitor</h3>
 
             </div>
             <div class="card-body">

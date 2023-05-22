@@ -113,6 +113,16 @@ class DashboardModel extends Model
     {
         $builder = $this->users;
         $builder->where('id', $_SESSION['id']);
+
+        // Hapus password dari data jika tidak diisi
+        if (empty($data['password'])) {
+            unset($data['password']);
+        } else if (empty($data['username'])) {
+            unset($data['username']);
+        } else if (empty($data['nomor'])) {
+            unset($data['nomor']);
+        }
+
         return $builder->update($data);
     }
 
@@ -197,6 +207,16 @@ class DashboardModel extends Model
         $builder = $this->report;
         $builder->selectSum('price', 'total');
         $builder->where('MONTH(report.date)', date('m'));
+        $builder->where('YEAR(report.date)', date('Y'));
+        $query = $builder->get();
+        $row = $query->getRow();
+        return $row->total;
+    }
+
+    public function credityears()
+    {
+        $builder = $this->report;
+        $builder->selectSum('price', 'total');
         $builder->where('YEAR(report.date)', date('Y'));
         $query = $builder->get();
         $row = $query->getRow();

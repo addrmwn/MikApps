@@ -127,7 +127,7 @@
                                 <th>Kode Voucher</th>
                                 <th>Profile</th>
                                 <th>Comment</th>
-
+                                <th>Tanggal dibuat</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,7 +142,7 @@
                                     <td><?= $data->code ?></td>
                                     <td><?= $data->service ?></td>
                                     <td><?= $data->comment ?></td>
-
+                                    <td><?= tanggal(date('Y-m-d', strtotime($data->datetime))) ?></td>
                                 </tr>
 
                             <?php } ?>

@@ -105,8 +105,17 @@
                                                 <input class="input100 form-control " type="text" name="username" value="<?= $_SESSION['username']; ?>">
                                             </div>
                                         </div>
+
                                         <div class="mb-3">
                                             <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
+                                                <a href="javascript:void(0)" class="input-group-text bg-white">
+                                                    <i class="mdi mdi-cellphone text-muted" aria-hidden="true"></i>
+                                                </a>
+                                                <input class="input100 form-control" type="text" name="nomor" value="<?= $_SESSION['nomor']; ?>" placeholder="Nomor Whatsapp">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="wrap-input100 validate-input input-group" id="Password-toggle2">
                                                 <a href="javascript:void(0)" class="input-group-text bg-white">
                                                     <i class="mdi mdi-lock text-muted" aria-hidden="true"></i>
                                                 </a>

@@ -34,15 +34,13 @@ class AutoController extends BaseController
 
         $voucheractive = $dashboardmodel->statusvoucher();
 
+        if ($this->ros->connect($host, $uname, $pass)) {
 
-        foreach ($voucheractive as $voucher) {
+            foreach ($voucheractive as $voucher) {
 
-            $kode = $voucher->code;
-            $profile = $voucher->service;
-            $price = $voucher->price;
-
-
-            if ($this->ros->connect($host, $uname, $pass)) {
+                $kode = $voucher->code;
+                $profile = $voucher->service;
+                $price = $voucher->price;
 
                 $gethotspot = $this->ros->comm("/ip/hotspot/active/print");
 
@@ -66,12 +64,14 @@ class AutoController extends BaseController
                             'time' => $timenya,
                         );
                         $dashboardmodel->insertreport($datanya);
-                        echo "<font color='green'><b>Voucher : $kode | Status : Berhasil Di Update  </font><br><br>";
+                        $font = "green";
+                        $text = "Berhasil Update";
                     } else {
-                        echo "<font color='red'><b>Voucher : $kode | Status : Belum aktif pada mikrotik hotspot </font><br><br>";
+                        $font = "red";
+                        $text = "Belum aktif pada mikrotik hotspot";
                     }
                 }
-            } else {
+                echo "<font color=" . $font . "><b>Voucher : $kode | Status : $text </font><br><br>";
             }
         }
     }

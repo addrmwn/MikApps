@@ -34,6 +34,7 @@ class DashboardController extends BaseController
                 $data = [
                     'id' => $user['id'],
                     'username' => $user['username'],
+                    'nomor' => $user['nomor'],
                     'status' => 'login',
                 ];
                 $this->session->set($data);
@@ -185,27 +186,32 @@ class DashboardController extends BaseController
 
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
+        $nomor = $this->request->getPost('nomor');
+
+        $data = [
+            'username' => $username,
+            'nomor' => $nomor,
+        ];
+
+        if (!empty($password)) {
+            // Jika password diisi, tambahkan ke data yang akan diupdate
+            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+        } else if (!empty($username)) {
+            $data['username'] = $username;
+        } else if (!empty($nomor)) {
+            $data['nomor'] = $nomor;
+        }
 
 
-        if (empty($password)) {
-            $this->session->setFlashdata('error', ['Password belum di isi']);
-            return redirect()->to(base_url('router/list'));
+        $save = $dashboardmodel->updateuser($data);
+
+        if ($save) {
+            $this->session->remove('status');
+            $this->session->setFlashdata('success', ['User berhasil diubah!']);
+            return redirect()->to(base_url('/'));
         } else {
-            $data = [
-                'username' => $username,
-                'password' => password_hash($password, PASSWORD_DEFAULT),
-            ];
-
-            $save = $dashboardmodel->updateuser($data);
-
-            if ($save) {
-                $this->session->remove('status');
-                $this->session->setFlashdata('success', ['User berhasil diubah!']);
-                return redirect()->to(base_url('/'));
-            } else {
-                $this->session->setFlashdata('error', ['Gagal!']);
-                return redirect()->to(base_url('router/list'));
-            }
+            $this->session->setFlashdata('error', ['Gagal!']);
+            return redirect()->to(base_url('router/list'));
         }
     }
 
@@ -1013,7 +1019,7 @@ class DashboardController extends BaseController
         $dashboardmodel = new DashboardModel;
 
         $data = [
-            'title' => 'Hotspot Active',
+            'title' => 'Hotspot Users',
             'hotspotuser' => $dashboardmodel->hotspotuser(),
             'comment' => $dashboardmodel->comment(),
 
@@ -1032,6 +1038,7 @@ class DashboardController extends BaseController
             'voucher' => $dashboardmodel->datavcrmonth(),
             'tahun' => $dashboardmodel->gettahunmasuk(),
             'credit' => $dashboardmodel->credit(),
+            'credityears' => $dashboardmodel->credityears(),
             'hotspotuser' => $dashboardmodel->hotspotuser(),
             'comment' => $dashboardmodel->comment(),
 

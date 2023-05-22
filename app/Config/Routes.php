@@ -81,7 +81,9 @@ $routes->post('report/filter', 'DashboardController::report_filter');
 
 // Cronjobs
 
-$routes->add('auto/cekvoucher', 'Autocontroller::cekvoucher');
+$routes->add('auto/cekvoucher', 'AutoController::cekvoucher');
+
+
 
 
 
