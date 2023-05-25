@@ -70,8 +70,8 @@ class AutoController extends BaseController
                         $font = "red";
                         $text = "Belum aktif pada mikrotik hotspot";
                     }
+                    echo "<font color=" . $font . "><b>Voucher : $kode | Status : $text </font><br><br>";
                 }
-                echo "<font color=" . $font . "><b>Voucher : $kode | Status : $text </font><br><br>";
             }
         }
     }
