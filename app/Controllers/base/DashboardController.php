@@ -11,12 +11,13 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends BaseController
 {
+    private $session;
+    private $ros;
 
     public function __construct()
     {
         $this->session = session();
         $this->request = \Config\Services::request();
-        $this->uri = $this->request->uri;
         $this->ros = new RouterosAPI();
     }
 
@@ -25,7 +26,7 @@ class DashboardController extends BaseController
         $dashboardmodel = new DashboardModel;
 
         $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $password = (string)$this->request->getPost('password');
 
         $user = $dashboardmodel->getuser($username)->getRowArray();
 
@@ -185,7 +186,7 @@ class DashboardController extends BaseController
         $dashboardmodel = new DashboardModel;
 
         $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $password = (string)$this->request->getPost('password');
         $nomor = $this->request->getPost('nomor');
 
         $data = [
