@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?= $title; ?> | <?= SITE_NAME; ?></title>
+    <title><?=$title;?> | <?=SITE_NAME;?></title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,6 @@
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <!-- End plugin css for this page -->
-
 
 
     <!-- Plugin css for this page -->
@@ -75,7 +74,7 @@
                 <ul class="nav">
                     <li class="nav-item nav-category">Main</li>
                     <li class="nav-item">
-                        <a href="<?= base_url(); ?>dashboard" class="nav-link">
+                        <a href="<?=base_url();?>dashboard" class="nav-link">
                             <i class="link-icon" data-feather="box"></i>
                             <span class="link-title">Dashboard</span>
                         </a>
@@ -90,40 +89,40 @@
                         <div class="collapse" id="hotspot">
                             <ul class="nav sub-menu">
                                 <li class="nav-item">
-                                    <a href="<?= base_url() ?>hotspot/generate" class="nav-link">Generate Voucher</a>
+                                    <a href="<?=base_url()?>hotspot/generate" class="nav-link">Generate Voucher</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= base_url() ?>hotspot/adduser" class="nav-link">Add User</a>
+                                    <a href="<?=base_url()?>hotspot/adduser" class="nav-link">Add User</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= base_url() ?>hotspot/users" class="nav-link">Users List</a>
+                                    <a href="<?=base_url()?>hotspot/users" class="nav-link">Users List</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= base_url() ?>hotspot/active" class="nav-link">Hotspot Active</a>
+                                    <a href="<?=base_url()?>hotspot/active" class="nav-link">Hotspot Active</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= base_url() ?>hotspot/profile" class="nav-link">Hotspot Profile</a>
+                                    <a href="<?=base_url()?>hotspot/profile" class="nav-link">Hotspot Profile</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
 
                     <li class="nav-item">
-                        <a href="<?= base_url(); ?>report" class="nav-link">
+                        <a href="<?=base_url();?>report" class="nav-link">
                             <i class="link-icon" data-feather="book"></i>
                             <span class="link-title">Report</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="<?= base_url(); ?>router/list" class="nav-link">
+                        <a href="<?=base_url();?>router/list" class="nav-link">
                             <i class="link-icon" data-feather="settings"></i>
                             <span class="link-title">Settings</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="<?= base_url(); ?>logout" class="nav-link">
+                        <a href="<?=base_url();?>logout" class="nav-link">
                             <i class="link-icon" data-feather="log-out"></i>
                             <span class="link-title">Logout</span>
                         </a>
@@ -151,13 +150,13 @@
             <div class="page-content">
 
                 <?php
-                echo view($view);
-                ?>
+echo view($view);
+?>
             </div>
 
             <!-- partial:partials/_footer.html -->
             <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small">
-                <p class="text-muted mb-1 mb-md-0">Copyright © 2023 <a href="https://www.nobleui.com" target="_blank"><?= SITE_NAME; ?></a>.</p>
+                <p class="text-muted mb-1 mb-md-0">Copyright © 2023 <a href="https://www.nobleui.com" target="_blank"><?=SITE_NAME;?></a>.</p>
                 <p class="text-muted">Crafted with <i class="mb-1 text-primary ms-1 icon-sm" data-feather="heart"></i> by Adi Darmawan</p>
             </footer>
             <!-- partial -->

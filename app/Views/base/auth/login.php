@@ -59,11 +59,11 @@
 
                                         if ($errors != null) : ?>
 
-                                            <div class="alert alert-danger alert-message" role="alert">
-                                                <?php foreach ($errors as $err) {
+                                        <div class="alert alert-danger alert-message" role="alert">
+                                            <?php foreach ($errors as $err) {
                                                     echo $err;
                                                 } ?>
-                                            </div>
+                                        </div>
 
                                         <?php endif ?>
 
@@ -71,32 +71,38 @@
                                         $session = session();
                                         $success = $session->getFlashdata('success');
                                         if ($success != null) : ?>
-                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                <i class="mdi mdi-check-circle me-2" aria-hidden="true"></i>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <i class="mdi mdi-check-circle me-2" aria-hidden="true"></i>
 
-                                                <?php foreach ($success as $suc) {
+                                            <?php foreach ($success as $suc) {
                                                     echo $suc;
                                                 } ?>
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
-                                            </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="btn-close"></button>
+                                        </div>
 
 
                                         <?php endif ?>
 
-                                        <a href="<?= base_url() ?>" class="noble-ui-logo logo-light d-block mb-2">Mik<span>Apps</span></a>
+                                        <a href="<?= base_url() ?>"
+                                            class="noble-ui-logo logo-light d-block mb-2">Mik<span>Apps</span></a>
                                         <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
-                                        <form method="post" action="<?php echo base_url('auth'); ?>" class="forms-sample">
+                                        <form method="post" action="<?php echo base_url('auth'); ?>"
+                                            class="forms-sample">
                                             <div class="mb-3">
                                                 <label for="username" class="form-label">Username</label>
-                                                <input type="text" class="form-control" name="username" placeholder="Enter Username">
+                                                <input type="text" class="form-control" name="username"
+                                                    placeholder="Enter Username">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password" class="form-label">Password</label>
-                                                <input type="password" class="form-control" name="password" placeholder="Enter Password">
+                                                <input type="password" class="form-control" name="password"
+                                                    placeholder="Enter Password">
                                             </div>
 
                                             <div>
-                                                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white">
+                                                <button type="submit"
+                                                    class="btn btn-primary me-2 mb-2 mb-md-0 text-white">
                                                     <i class="me-2 icon-md" data-feather="log-in"></i>
 
                                                     Login
